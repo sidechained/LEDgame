@@ -1,5 +1,4 @@
 #include "audio_dac.h"
-//#include "stm32f4xx_conf.h" // reintegrate this instead of *.c's in makefile
 
 namespace ledGame {
 

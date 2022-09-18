@@ -46,6 +46,8 @@ CFLAGS += -I$(STM_STDPERIPH_PATH)/Libraries/CMSIS/Include
 # "stm32f4xx.h": CMSIS Peripheral Access Layer (register defs, bit defs, memory mapping)
 CFLAGS += -I$(STM_STDPERIPH_PATH)/Libraries/CMSIS/Device/ST/STM32F4xx/Include
 
+CFLAGS += -I/Applications/Faust-2.41.1/include/faust
+
 .PHONY: $(TARGET)
 
 all: $(TARGET)
