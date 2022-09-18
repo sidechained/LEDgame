@@ -6,8 +6,6 @@
 #ifndef LEDGAME_LEDS_H_
 #define LEDGAME_LEDS_H_
 
-namespace ledGame {
-
 class Leds {
  public:
   Leds() { }
@@ -37,7 +35,5 @@ class Leds {
   // static const
   uint16_t ledPins[4] { GPIO_Pin_13, GPIO_Pin_14, GPIO_Pin_15, GPIO_Pin_12 };
 };
-
-}  // namespace ledGame
 
 #endif  // LEDGAME_LEDS_H_

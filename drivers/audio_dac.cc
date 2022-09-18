@@ -1,7 +1,5 @@
 #include "audio_dac.h"
 
-namespace ledGame {
-
 /* static */
 AudioDac* AudioDac::instance_;
 
@@ -296,8 +294,6 @@ void AudioDac::Codec_TIMEOUT_UserCallback(void)// Basic management of the timeou
   while (1) { }
 }
 
-}  // namespace plaits
-
 extern "C" {
 
 void DMA1_Stream7_IRQHandler(void)
@@ -305,7 +301,7 @@ void DMA1_Stream7_IRQHandler(void)
   if (DMA_GetFlagStatus(DMA1_Stream7, DMA_FLAG_TCIF7) != RESET)
   {
     //fill second half of buffer whilst DMA transfers data from the first half:
-    ledGame::AudioDac::GetInstance()->Fill(1);
+    AudioDac::GetInstance()->Fill(1);
     /* Clear the Interrupt flag */
     DMA_ClearFlag(DMA1_Stream7, DMA_FLAG_TCIF7);
   }
@@ -314,10 +310,10 @@ void DMA1_Stream7_IRQHandler(void)
   if (DMA_GetFlagStatus(DMA1_Stream7, DMA_FLAG_HTIF7) != RESET)
   {
     //fill first half of buffer whilst DMA transfers data from the second half:
-    ledGame::AudioDac::GetInstance()->Fill(0);
+    AudioDac::GetInstance()->Fill(0);
     /* Clear the Interrupt flag */
     DMA_ClearFlag(DMA1_Stream7, DMA_FLAG_HTIF7);
   }
 }
 
-}  // namespace ledGame
+}

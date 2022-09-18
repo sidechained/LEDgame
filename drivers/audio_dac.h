@@ -11,8 +11,6 @@ const float a0 = (440.0f / 8.0f) / kCorrectedSampleRate;
 const size_t kMaxBlockSize = 24;
 const size_t kBlockSize = 12;
 
-namespace ledGame {
-
 class AudioDac {
  public:
   AudioDac() { }
@@ -52,7 +50,5 @@ class AudioDac {
   Frame tx_dma_buffer_[kMaxBlockSize * 2]; // * 2 for l, r channels
 
 };
-
-}  // namespace ledGame
 
 #endif  // LEDGAME_DAC_H_

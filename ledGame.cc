@@ -1,9 +1,8 @@
 #include "ledGame.h"
 #include "drivers/audio_dac.h"
-#include "noise.h"
+#include "sine.h"
 
 using namespace std;
-using namespace ledGame;
 
 FAUSTCLASS mygreatdsp;
 AudioDac audio_dac;

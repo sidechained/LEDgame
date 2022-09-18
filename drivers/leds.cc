@@ -6,8 +6,6 @@
 
 #include "leds.h"
 
-namespace ledGame {
-
 using namespace std;
 
 void Leds::Init() {
@@ -69,5 +67,3 @@ void Leds::AssignArray(bool arrayToAssign[])
 //     ledCount = ledCount % 4;
 //   }
 // }
-
-}  // namespace ledGame
