@@ -1,4 +1,3 @@
-#include "../stmlib/stmlib.h" // DISALLOW_COPY_AND_ASSIGN
 #include "stm32f4xx.h" // CMSIS Peripheral Access Layer (register defs, bit defs, memory mapping). This file prob needs to be included in every project
 #include "stm32f4xx_rcc.h" // Reset and clock control (GPIO seems to run on clocks)
 #include "stm32f4xx_gpio.h" // For working with General Purpose Input/Output pins
@@ -37,9 +36,6 @@ class Leds {
 
   // static const
   uint16_t ledPins[4] { GPIO_Pin_13, GPIO_Pin_14, GPIO_Pin_15, GPIO_Pin_12 };
-
-
-  DISALLOW_COPY_AND_ASSIGN(Leds);
 };
 
 }  // namespace ledGame

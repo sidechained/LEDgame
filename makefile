@@ -3,8 +3,8 @@ ARM_TOOLCHAIN_PATH=/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin
 STM_STDPERIPH_PATH=stm/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0
 STM_DISCOVERY_PATH=stm/STM32F4-Discovery_FW_V1.1.0
 
-SRCS=ledGame.cc sounds.cc resources.cc ui.cc
-SRCS+=drivers/audio_dac.cc drivers/leds.cc drivers/userButton.cc
+SRCS=ledGame.cc
+SRCS+=drivers/audio_dac.cc drivers/leds.cc
 
 # Discovery board firmware source files:
 SRCS+=$(STM_DISCOVERY_PATH)/Utilities/STM32F4-Discovery/stm32f4_discovery.c

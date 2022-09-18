@@ -1,10 +1,15 @@
 #ifndef LEDGAME_DAC_H_
 #define LEDGAME_DAC_H_
 
-#include "../dsp/dsp.h"
-#include "../stmlib/stmlib.h" // DISALLOW_COPY_AND_ASSIGN
 #include "stm32f4xx.h" // CMSIS Cortex-M4 Device Peripheral Access Layer Header File.
 #include <cstddef>
+
+static const float kSampleRate = 48000.0f;
+static const float kCorrectedSampleRate = 47872.34f;
+const float a0 = (440.0f / 8.0f) / kCorrectedSampleRate;
+
+const size_t kMaxBlockSize = 24;
+const size_t kBlockSize = 12;
 
 namespace ledGame {
 
@@ -46,7 +51,6 @@ class AudioDac {
   FillBufferCallback callback_;
   Frame tx_dma_buffer_[kMaxBlockSize * 2]; // * 2 for l, r channels
 
-  DISALLOW_COPY_AND_ASSIGN(AudioDac);
 };
 
 }  // namespace ledGame
