@@ -1,8 +1,8 @@
-#ifndef LEDGAME_DAC_H_
-#define LEDGAME_DAC_H_
+#ifndef AUDIO_DAC_H_
+#define AUDIO_DAC_H_
 
 #include "stm32f4xx.h" // CMSIS Cortex-M4 Device Peripheral Access Layer Header File.
-#include <cstddef>
+#include <cstddef> // for size_t
 
 static const float kSampleRate = 48000.0f;
 static const float kCorrectedSampleRate = 47872.34f;
@@ -51,4 +51,4 @@ class AudioDac {
 
 };
 
-#endif  // LEDGAME_DAC_H_
+#endif  // AUDIO_DAC_H_

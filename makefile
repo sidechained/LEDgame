@@ -1,10 +1,10 @@
-TARGET = ledGame
+TARGET = faust2stm
 ARM_TOOLCHAIN_PATH=/Applications/ArmGNUToolchain/11.3.rel1/arm-none-eabi/bin
 STM_STDPERIPH_PATH=stm/STM32F4xx_DSP_StdPeriph_Lib_V1.8.0
 STM_DISCOVERY_PATH=stm/STM32F4-Discovery_FW_V1.1.0
+DRIVERS_PATH=drivers
 
-SRCS=ledGame.cc
-SRCS+=drivers/audio_dac.cc drivers/leds.cc
+SRCS=faust2stm.cc $(DRIVERS_PATH)/audio_dac.cc $(DRIVERS_PATH)/leds.cc
 
 # Discovery board firmware source files:
 SRCS+=$(STM_DISCOVERY_PATH)/Utilities/STM32F4-Discovery/stm32f4_discovery.c
@@ -35,7 +35,6 @@ CFLAGS += --specs=nosys.specs
 CFLAGS += -DUSE_STDPERIPH_DRIVER
 CFLAGS += -DSTM32F40_41xxx
 
-# 
 CFLAGS += -I$(STM_DISCOVERY_PATH)/Utilities/STM32F4-Discovery
 CFLAGS += -I$(STM_DISCOVERY_PATH)/Project/Audio_playback_and_record/inc
 CFLAGS += -I$(STM_DISCOVERY_PATH)/Libraries/STM32F4xx_StdPeriph_Driver/inc

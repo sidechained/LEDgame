@@ -1,8 +1,5 @@
-#include "ledGame.h"
 #include "drivers/audio_dac.h"
 #include "sine.h"
-
-using namespace std;
 
 FAUSTCLASS mygreatdsp;
 AudioDac audio_dac;
@@ -42,8 +39,7 @@ void FillBuffer(AudioDac::Frame* buf, size_t size) {
   buf = convert_float_to_int16_t(buf, output, size);
 }
 
-int main(void) {
-  
+int main(void) {  
   mygreatdsp.init(kSampleRate);
   audio_dac.Init(int(kSampleRate), kBlockSize);
   audio_dac.Start(&FillBuffer);

@@ -6,8 +6,6 @@
 
 #include "leds.h"
 
-//using namespace std;
-
 void Leds::Init() {
   Init_GPIO();
 }
@@ -45,25 +43,3 @@ void Leds::AssignArray(bool arrayToAssign[])
     ledArray[i] = arrayToAssign[i];
   }
 }
-
-// void Leds::SysTick_Init() {
-//   /* SysTick end of count event each 10ms */
-//   ledCount = 0;
-//   RCC_ClocksTypeDef RCC_Clocks;
-//   RCC_GetClocksFreq(&RCC_Clocks);
-//   SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
-// }
-
-// extern "C" {
-//   void SysTick_Handler(void) {
-//     if (rotateClockwise) {
-//       std::rotate(ledVector.begin(), ledVector.begin() + 1, ledVector.end());
-//     }
-//     else // rotate antiClockwise
-//     {
-//       std::rotate(ledVector.rbegin(), ledVector.rbegin() + 1, ledVector.rend());
-//     }
-//     ledCount++;
-//     ledCount = ledCount % 4;
-//   }
-// }
