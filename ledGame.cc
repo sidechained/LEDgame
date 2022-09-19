@@ -20,22 +20,30 @@ extern "C" {
   void UsageFault_Handler(void) { while (1) { } }
 }
 
-int16_t convert_float_to_int16_t(float *output, size_t size) {
+AudioDac::Frame* convert_float_to_int16_t(AudioDac::Frame* buf, float **output, size_t size) {
   int32_t tmp;
-  for (int n = 0; n < size; n++) {
-    tmp = (int32_t)(output[n] * 32768);
-    tmp = (tmp <= -32768) ? -32768 : (tmp >= 32767) ? 32767 : tmp;
+  for (int c = 0; c < 2; c++) {
+    for (int n = 0; n < size; n++) {
+      tmp = (int32_t)(output[0][n] * 32768); // hack for mono - copy channel 0 twice
+      tmp = (tmp <= -32768) ? -32768 : (tmp >= 32767) ? 32767 : tmp;
+    }
+    switch (c) {
+      case 0:
+        buf->l = (int16_t)tmp;
+      case 1:
+        buf->r = (int16_t)tmp;
+      }
   }
-  return (int16_t)tmp;
+  return buf;
 }
 
 void FillBuffer(AudioDac::Frame* buf, size_t size) {
   mygreatdsp.compute(size, NULL, output);
-  buf->l = convert_float_to_int16_t(output[0], size);
-  buf->r = convert_float_to_int16_t(output[1], size);
+  buf = convert_float_to_int16_t(buf, output, size);
 }
 
 int main(void) {
+  
   mygreatdsp.init(kSampleRate);
   audio_dac.Init(int(kSampleRate), kBlockSize);
   audio_dac.Start(&FillBuffer);

@@ -6,7 +6,7 @@
 
 #include "leds.h"
 
-using namespace std;
+//using namespace std;
 
 void Leds::Init() {
   Init_GPIO();
