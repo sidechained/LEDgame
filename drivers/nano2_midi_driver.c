@@ -1,15 +1,6 @@
-/*
- * MIDI_application.c
- *
- *  First created on: 6 dec. 2014
- *      Author: Xavier Halgand
- */
+// Author: Xavier Halgand & Graham Booth
 
-/* Includes ------------------------------------------------------------------*/
-
-#include "MIDI_application.h"
-
-/* Private define ------------------------------------------------------------*/
+#include "nano2_midi_driver.h"
 
 #define RX_BUFF_SIZE 64 /* USB MIDI buffer : max received data 64 bytes */
 
@@ -20,15 +11,73 @@ int8_t velocity;
 uint8_t notes_On[128] = {0};
 int8_t notesCount = 0; // number of notes on (keys pressed)
 
+USBH_HandleTypeDef hUSBHost;
+MIDI_ApplicationTypeDef Appli_state = APPLICATION_IDLE;
+
 /* Private function prototypes -----------------------------------------------*/
 void ProcessReceivedMidiDatas(void);
 
-/*-----------------------------------------------------------------------------*/
-/**
- * @brief  Main routine for MIDI application, looped in main.c
- * @param  None
- * @retval none
- */
+void USB_MIDI_Init(void)
+{
+	// called from main after all the audio stuff:
+
+	/*## Init Host Library ################################################*/
+	USBH_Init(&hUSBHost, USBH_UserProcess_callback, 0);
+
+	/*## Add Supported Class ##############################################*/
+	USBH_RegisterClass(&hUSBHost, USBH_MIDI_CLASS);
+
+	/*## Start Host Process ###############################################*/
+	USBH_Start(&hUSBHost);
+
+	while (1)
+	{
+		MIDI_Application();
+
+		/* USBH_Background Process */
+		USBH_Process(&hUSBHost);
+	}
+}
+
+static void USBH_UserProcess_callback(USBH_HandleTypeDef *pHost, uint8_t vId)
+{
+	switch (vId)
+	{
+	case HOST_USER_SELECT_CONFIGURATION:
+		break;
+
+	case HOST_USER_DISCONNECTION:
+		Appli_state = APPLICATION_DISCONNECT;
+		// BSP_LED_Off(LED_Green);
+		// BSP_LED_Off(LED_Blue);
+		break;
+
+	case HOST_USER_CLASS_ACTIVE:
+		Appli_state = APPLICATION_READY;
+		// BSP_LED_On(LED_Green);
+		// BSP_LED_Off(LED_Blue);
+		//BSP_LED_Off(LED_Red);
+		break;
+
+	case HOST_USER_CONNECTION:
+		Appli_state = APPLICATION_START;
+		// BSP_LED_On(LED_Blue);
+		break;
+
+	default:
+		break;
+	}
+}
+
+void Error_Handler(void)
+{
+	/* Turn LED5 on */
+	//BSP_LED_On(LED_Red);
+	while (1)
+	{
+	}
+}
+
 void MIDI_Application(void)
 {
 	if (Appli_state == APPLICATION_READY)
@@ -48,12 +97,6 @@ void MIDI_Application(void)
 	}
 }
 
-/*-----------------------------------------------------------------------------*/
-/**
- * @brief  MIDI data receive callback.
- * @param  phost: Host handle
- * @retval None
- */
 void USBH_MIDI_ReceiveCallback(USBH_HandleTypeDef *phost)
 {
 	ProcessReceivedMidiDatas();
@@ -67,7 +110,6 @@ void USBH_MIDI_ReceiveCallback(USBH_HandleTypeDef *phost)
 // 		notes_On[i] = 0;
 // }
 
-/*-----------------------------------------------------------------------------*/
 void ProcessReceivedMidiDatas(void)
 {
 	uint16_t numberOfPackets;
